@@ -53,8 +53,10 @@ arrCards.sort(() => Math.random() - 0.5);
 console.log(arrCards);
 
 const displayGrid = document.getElementById('grid');
-const arrChoosenName = [];
-const arrChoosenId = [];
+
+let arrChoosenName = [];
+let arrChoosenId = [];
+let cardsWon = [];
 
 const createBoard = () => {
   for (let i = 0; i < arrCards.length; i++) {
@@ -65,17 +67,44 @@ const createBoard = () => {
     displayGrid.appendChild(card);
   }
 };
+function checkMatch() {
+  const cards = document.querySelectorAll('img');
+  const optionOneId = arrChoosenId[0];
+  const optionTwoId = arrChoosenId[1];
 
-createBoard();
+  if (arrChoosenId[0] == arrChoosenId[1]) {
+    cards[optionOneId].setAttribute('src', 'img/blank.png');
+    cards[optionTwoId].setAttribute('src', 'img/blank.png');
+    alert('You have clicked the same card twice!');
+  } else if (arrChoosenName[0] === arrChoosenName[1]) {
+    alert('You found the match!!');
+    cards[optionOneId].setAttribute('src', 'img/white.png');
+    cards[optionTwoId].setAttribute('src', 'img/white.png');
+    cards[optionOneId].removeEventListener('click', flipCard);
+    cards[optionTwoId].removeEventListener('click', flipCard);
+    cardsWon.push(arrChoosenName);
+    console.log(cardsWon);
+  } else {
+    cards[optionOneId].setAttribute('src', 'img/blank.png');
+    cards[optionTwoId].setAttribute('src', 'img/blank.png');
+    alert('Try Again!');
+  }
+
+  arrChoosenId = [];
+  arrChoosenName = [];
+}
 
 function flipCard() {
   const cardId = this.getAttribute('id');
   arrChoosenName.push(arrCards[cardId].name);
+
   console.log(arrChoosenName);
   arrChoosenId.push(cardId);
+  console.log(arrChoosenId);
   this.setAttribute('src', arrCards[cardId].img);
-
-  //const arrCardId = this.getAtrribute('id');
-
-  console.log(cardId);
+  if (arrChoosenName.length === 2) {
+    setTimeout(checkMatch, 1000);
+  }
 }
+
+createBoard();
