@@ -53,6 +53,7 @@ arrCards.sort(() => Math.random() - 0.5);
 console.log(arrCards);
 
 const displayGrid = document.getElementById('grid');
+const displayResult = document.getElementById('result');
 
 let arrChoosenName = [];
 let arrChoosenId = [];
@@ -88,6 +89,12 @@ function checkMatch() {
     cards[optionOneId].setAttribute('src', 'img/blank.png');
     cards[optionTwoId].setAttribute('src', 'img/blank.png');
     alert('Try Again!');
+  }
+
+  displayResult.textContent = cardsWon.length;
+  if (cardsWon.length === arrCards.length / 2) {
+    displayResult.textContent =
+      'Congratulation you have matched all the cards!!';
   }
 
   arrChoosenId = [];
