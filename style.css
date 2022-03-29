@@ -1,0 +1,7 @@
+#grid {
+  display: flex;
+  flex-flow: row wrap;
+  border: 5px groove grey;
+  width: 400px;
+  height: auto;
+}
